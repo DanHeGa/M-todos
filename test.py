@@ -4,7 +4,7 @@ l3 = "-6.8e75 -6 c"
 
 '''Ya verifica flotante, ahora necesita identificar si son negativos y el uso de exponenciales E y su exponente'''
 lo = list(linea)
-entero = [] #commnt
+entero = [] #number list
 for i in range(len(lo)):
     if lo[i] == '-' and lo[i + 1].isdigit():
         entero.append(lo[i])
