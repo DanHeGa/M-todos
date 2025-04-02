@@ -2,7 +2,6 @@ linea = "78 a 4 b6"
 l2 = "a = 32.4 *(-8.6 - b)/       6.1E-8"
 l3 = "-6.8e75 -6 c"
 
-'''Ya verifica flotante, ahora necesita identificar si son negativos y el uso de exponenciales E y su exponente'''
 lo = list(linea)
 entero = [] #number mngt
 for i in range(len(lo)):
