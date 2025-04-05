@@ -5,7 +5,7 @@ l4 = "a_MyVar03=32.4*(-8.6 - b_var8)/       6.1e-8 //Esto es un = comentario"
 
 lo = l4
 entero = [] #number mngt
-i = 0 #jj
+i = 0 
 while i < len(lo):
     if lo[i] == '-' and lo[i + 1].isdigit():
         entero.append(lo[i])
