@@ -102,8 +102,8 @@ def postRe2NFA(postfix):
           counter = counter+1;c2 = counter
           s.append({});s.append({}) 
           stack.append([c1,c2])
-          s[r2]['e'] = (r1,c2)
-          s[c1]['e'] = (r1,c2)
+          s[r2]['e'] = [r1,c2]
+          s[c1]['e'] = [r1,c2]
           if start == r1:start = c1 
           if end == r2:end = c2 
       elif i == '+':
@@ -112,9 +112,8 @@ def postRe2NFA(postfix):
         counter += 1; c2 = counter
         s.append({}); s.append({})
         stack.append([c1, c2])
-        s[r2]['e'] = r1
-        s[c1]['e'] = r1
-        s[r2]['e'] = c2
+        s[r2]['e'] = [r1, c2]
+        s[c1]['e'] = [r1]
       elif i == '.':
           #get last states in stack and unite them
           nfa21, nfa22 = stack.pop()
@@ -133,7 +132,7 @@ def postRe2NFA(postfix):
           r11,r12 = stack.pop()
           r21,r22 = stack.pop()
           stack.append([c1,c2])
-          s[c1]['e'] = (r21,r11)
+          s[c1]['e'] = [r21,r11]
           s[r12]['e'] = c2
           s[r22]['e'] = c2
           if start == r11 or start == r21:start = c1 
@@ -143,13 +142,16 @@ def postRe2NFA(postfix):
     
   return {
     "states": s,
-    "start": stack[0][0],
-    "end": stack[0][1],
+    "start": start,
+    "end": end,
     "alphabet": keys
   }
   
 def main():
-  result = infix2postfix('X*Y.Z')
+  # Example expression that should result in a DFA with more than two states
+  # This expression includes concatenation, union, and Kleene star
+  expression = 'A.B|C*'
+  result = infix2postfix(expression)
   nfa = postRe2NFA(result)
   print(nfa)
   

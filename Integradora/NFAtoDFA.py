@@ -11,16 +11,11 @@ originalNFA = [
 
 '''
 # Esta es la salida del NFA de Dany:
-keys = ['e', 'A', 'D', 'C', 'B']
-originalNFA = [
-    {'A': 1}, {}, {'B': 3}, {'e': (2, 5)}, {'e': (2, 5)}, {},
-    {'C': 7}, {'e': 13}, {'D': 9}, {'e': (8, 11)}, {'e': (8, 11)},
-    {'e': 13}, {'e': (6, 10)}, {}
-]
-keys = ['e', 'a', 'b', 'c']
-originalNFA = [
-    {'a': 1}, {'e': (2, 4)}, {'b': 3}, {}, {'c': 5}, {}
-]
+keys = ['e', 'B', 'C', 'A']
+originalNFA = [{'A': 1}, {'e': 5}, {'B': 3}, {'e': 5}, 
+               {'e': [0, 2]}, {'e': 8}, {'C': 7}, {'e': [6, 9]}, 
+               {'e': [6, 9]}, {}]
+
 
 
 # Cambia el NFA de la salida anterior a una tabla con las transiciones
