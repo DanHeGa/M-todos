@@ -1,4 +1,5 @@
 from collections import deque
+from graphviz import Digraph
 
 '''
 # Esta es la salida del NFA de Dany:
@@ -112,6 +113,33 @@ def print_DFA(dfaStates, dfaTransitions, start, dfaFinalState):
 
     imprimeEstadosFinales = [str(sorted(state)) for state in dfaFinalState]
     print("Estados finales del AFD: " + " , ".join(imprimeEstadosFinales))
+
+def generate_dfa_svg(dfa):
+    dot = Digraph(format='svg')
+    dot.attr(rankdir='LR')
+
+    # Estados q
+    for estado in dfa["estados"]:
+        nombre = etiquetaEstado(estado)
+        shape = 'doublecircle' if estado in dfa["estados_finales"] else 'circle'
+        dot.node(nombre, shape=shape)
+
+    # q0
+    nombre_inicial = etiquetaEstado(dfa["estado_inicial"])
+    dot.node('', shape='point')
+    dot.edge('', nombre_inicial)
+
+    # Transiciones
+    for (origen, simbolo), destino in dfa["transiciones"].items():
+        origen_nombre = etiquetaEstado(origen)
+        destino_nombre = etiquetaEstado(destino)
+        dot.edge(origen_nombre, destino_nombre, label=simbolo)
+
+    return dot.pipe(format='svg').decode('utf-8')
+
+
+def etiquetaEstado(estado):
+    return "{" + ",".join(map(str, sorted(estado))) + "}"
 
 def main():   
     # Esta es la salida del NFA de Dany:
