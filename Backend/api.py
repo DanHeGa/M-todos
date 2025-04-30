@@ -1,7 +1,7 @@
 import json
 from flask import Flask, jsonify, request
 from Integradora.Thompson import infix2postfix, postRe2NFA
-from Integradora.NFAtoDFA import nfa_to_dfa, language_checker
+from Integradora.NFAtoDFA import nfa_to_dfa, generate_dfa_svg, language_checker
 
 #create new application
 app = Flask(__name__)
