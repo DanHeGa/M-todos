@@ -1,5 +1,6 @@
 from collections import deque
 from graphviz import Digraph
+import regex as re
 
 '''
 # Esta es la salida del NFA de Dany:
@@ -9,8 +10,8 @@ originalNFA = [
     {'C': 7}, {'e': 13}, {'D': 9}, {'e': (8, 11)}, {'e': (8, 11)},
     {'e': 13}, {'e': (6, 10)}, {}
 ]
-
 '''
+
 def convert_to_tableNFA(originalNFA):
     # Cambia el NFA de la salida anterior a una tabla con las transiciones
     # Guarda como listas de destinos
@@ -141,6 +142,10 @@ def generate_dfa_svg(dfa):
 def etiquetaEstado(estado):
     return "{" + ",".join(map(str, sorted(estado))) + "}"
 
+def language_checker(word, regular_expression):
+    regex = re.compile(regular_expression)
+    return bool(regex.fullmatch(word))
+    
 def main():   
     # Esta es la salida del NFA de Dany:
     keys = ['e', 'B', 'C', 'A']
