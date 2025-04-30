@@ -29,11 +29,11 @@ def get_dfa_svg():
     dfa = nfa_to_dfa(nfa, keys)
     
     #generate svg (TO DO)
-    # svg = generate_dfa_svg(dfa)
+    svg = generate_dfa_svg(dfa)
     
-    # return jsonify({
-    #     "svg": svg
-    # })
+    return jsonify({
+        "svg": svg
+    })
 
 @app.route("/wordChecker", method=['POST'])
 def verificate_word():
