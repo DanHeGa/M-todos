@@ -1,7 +1,7 @@
 import json
 from flask import Flask, jsonify, request
 from Integradora.Thompson import infix2postfix, postRe2NFA
-from Integradora.NFAtoDFA import nfa_to_dfa
+from Integradora.NFAtoDFA import nfa_to_dfa, generate_dfa_svg
 
 #create new application
 app = Flask(__name__)
@@ -29,11 +29,11 @@ def get_dfa_svg():
     dfa = nfa_to_dfa(nfa, keys)
     
     #generate svg (TO DO)
-    # svg = generate_dfa_svg(dfa)
+    svg = generate_dfa_svg(dfa)
     
-    # return jsonify({
-    #     "svg": svg
-    # })
+    return jsonify({
+        "svg": svg
+    })
 
 @app.route("/wordChecker", method=['POST'])
 def verificate_word():
