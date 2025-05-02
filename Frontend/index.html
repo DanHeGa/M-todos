@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link 
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" 
     rel="stylesheet" 
     integrity="sha384-DQvkBjpPgn7RC31MCQoOeC9TI2kdqa4+BSgNMNj8v77fdC77Kj5zpWFTJaaAoMbC" 
     crossorigin="anonymous" 
-    />
-    <link rel="stylesheet" href="./styles.css" />
-    <meta name="description" content="Solucion a Situación problema 1: Lenguajes Regulares">
-    <meta name="author" content="Daniela Herrera y Emily Castillo">
-    <title>Actividad integradora 1</title>
+  />
+  <link rel="stylesheet" href="./styles.css" />
+  <meta name="description" content="Solución a Situación problema 1: Lenguajes Regulares" />
+  <meta name="author" content="Daniela Herrera y Emily Castillo" />
+  <title>Actividad integradora 1</title>
 </head>
 <body>
-  <h1>Automata Finito Determinista</h1>
-  <form>
-    <div class="input-group mb-3" style="width: 300px;">
+  <div class="container mt-4">
+    <h1>Autómata Finito Determinista</h1>
+    <form onsubmit="event.preventDefault(); getData();">
+      <div class="input-group mb-3" style="width: 300px;">
         <span class="input-group-text">Σ</span>
         <div class="form-floating">
-          <input type="text" class="form-control" id="  ER" placeholder="ER">
+          <input type="text" class="form-control" id="alfabeto" placeholder="alfabeto" required />
+          <label for="alfabeto">Alfabeto (separado por comas)</label>
+        </div>
+      </div>
+
+      <div class="input-group mb-3" style="width: 300px;">
+        <span class="input-group-text">ER</span>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="ER" placeholder="ER" required />
           <label for="ER">Expresión regular</label>
         </div>
-    </div>
-    <button type="button" class="btn btn-outline-primary" id = "btnGenerar" onclick="getData()">Generar DFA</button>
+      </div>
 
-    </form> 
+      <button type="submit" class="btn btn-outline-primary">Generar DFA</button>
+    </form>
 
     <div id="resultado" style="margin-top: 20px;"></div>
+    <div id="output"></div>
+  </div>
 
-    <script>
-        async function getData() {
-            const response = await fetch('http://localhost:2000/api/registros/generales');
-            const data = await response.json();
-            console.log(data);
-        }
-      </script>
+  <script src="./scripts.js"></script>
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" 
+    crossorigin="anonymous">
+  </script>
 </body>
-<script 
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" 
-integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" 
-crossorigin="anonymous"
-></script>
-<script src="./scripts.js"></script>
 </html>
