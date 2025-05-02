@@ -115,7 +115,7 @@ def print_DFA(dfaStates, dfaTransitions, start, dfaFinalState):
     imprimeEstadosFinales = [str(sorted(state)) for state in dfaFinalState]
     print("Estados finales del AFD: " + " , ".join(imprimeEstadosFinales))
 
-def generate_dfa_svg(dfa):
+def generate_dfa_svg(dfa, output_file):
     dot = Digraph(format='svg')
     dot.attr(rankdir='LR')
 
@@ -160,6 +160,7 @@ def main():
     initial_state = dfa["estado_inicial"]
     final_state = dfa["estados_finales"]
 
+    generate_dfa_svg(dfa, "dfa_svg.svg")
     print_DFA(states, transitions, initial_state, final_state)
     
 if __name__ == '__main__':
