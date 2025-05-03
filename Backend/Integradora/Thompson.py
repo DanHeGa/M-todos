@@ -10,6 +10,7 @@ def infix2postfix(regex):
     '/': 4,
     '*': 4,
     '.': 3,
+    '|': 2,
     '+': 2,
     '-': 2,
     '(': 1
@@ -19,6 +20,7 @@ def infix2postfix(regex):
     '^': 'RL',  # Derecha a izquierda
     '*': 'LR',   # Izquierda a derecha
     '/': 'LR',
+    '|': 'LR',
     '+': 'LR',
     '-': 'LR',
     '.': 'LR'
@@ -28,7 +30,7 @@ def infix2postfix(regex):
     if ele == ' ':
       continue
     
-    if ele not in "()^/*+-.":
+    if ele not in "()^/*+-.|":
       postFix.append(ele)
     elif ele == '(':
       stack.append(ele)
@@ -146,13 +148,3 @@ def postRe2NFA(postfix):
     "end": end,
     "alphabet": keys
   }
-  
-def main():
-  expression = 'A.B|C*'
-  result = infix2postfix(expression)
-  nfa = postRe2NFA(result)
-  print(nfa)
-  
-  
-if __name__  ==  '__main__':
-  main()
