@@ -15,6 +15,9 @@ originalNFA = [
 
 def convert_to_tableNFA(originalNFA):
     nfa = {}
+    
+    if isinstance(originalNFA, list):
+        originalNFA = {i: trans for i, trans in enumerate(originalNFA)}
 
     for estado, transiciones in originalNFA.items():
         nfa[estado] = {}
@@ -37,6 +40,7 @@ def convert_to_tableNFA(originalNFA):
             raise TypeError(f"Transiciones para el estado {estado} no son válidas: {transiciones}")
 
     return nfa
+
 
 # Encuentra los estados alcanzables por transiciones epsilon
 def transicionesEpsilon(nfa, states):
@@ -158,23 +162,3 @@ def etiquetaEstado(estado):
 def language_checker(word, regular_expression):
     regex = re.compile(regular_expression)
     return bool(regex.fullmatch(word))
-    
-def main():   
-    # Esta es la salida del NFA de Dany:
-    keys = ['e', 'B', 'C', 'A']
-    originalNFA = [{'A': 1}, {'e': 5}, {'B': 3}, {'e': 5}, 
-                {'e': [0, 2]}, {'e': 8}, {'C': 7}, {'e': [6, 9]}, 
-                {'e': [6, 9]}, {}]
-
-    dfa = nfa_to_dfa(originalNFA, keys)
-
-    states = dfa["estados"]
-    transitions = dfa["transiciones"]
-    initial_state = dfa["estado_inicial"]
-    final_state = dfa["estados_finales"]
-
-    generate_dfa_svg(dfa, "dfa_svg.svg")
-    print_DFA(states, transitions, initial_state, final_state)
-    
-if __name__ == '__main__':
-    main()
