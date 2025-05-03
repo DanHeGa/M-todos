@@ -148,8 +148,6 @@ def postRe2NFA(postfix):
   }
   
 def main():
-  # Example expression that should result in a DFA with more than two states
-  # This expression includes concatenation, union, and Kleene star
   expression = 'A.B|C*'
   result = infix2postfix(expression)
   nfa = postRe2NFA(result)
