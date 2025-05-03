@@ -1,6 +1,7 @@
 from collections import deque
 from graphviz import Digraph
 import regex as re
+import ast
 
 '''
 # Esta es la salida del NFA de Dany:
@@ -13,16 +14,28 @@ originalNFA = [
 '''
 
 def convert_to_tableNFA(originalNFA):
-    # Cambia el NFA de la salida anterior a una tabla con las transiciones
-    # Guarda como listas de destinos
     nfa = {}
-    for i, transiciones in enumerate(originalNFA):
-        nfa[i] = {}
-        for sym, dest in transiciones.items():
-            if isinstance(dest, int):
-                nfa[i][sym] = [dest]
-            else:
-                nfa[i][sym] = list(dest)
+
+    for estado, transiciones in originalNFA.items():
+        nfa[estado] = {}
+        
+        # Si las transiciones están en una lista
+        if isinstance(transiciones, list):
+            for t in transiciones:
+                for sym, dest in t.items():
+                    if isinstance(dest, int):
+                        nfa[estado].setdefault(sym, []).append(dest)
+                    else:
+                        nfa[estado].setdefault(sym, []).extend(dest)
+        elif isinstance(transiciones, dict):
+            for sym, dest in transiciones.items():
+                if isinstance(dest, int):
+                    nfa[estado][sym] = [dest]
+                else:
+                    nfa[estado][sym] = list(dest)
+        else:
+            raise TypeError(f"Transiciones para el estado {estado} no son válidas: {transiciones}")
+
     return nfa
 
 # Encuentra los estados alcanzables por transiciones epsilon
