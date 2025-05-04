@@ -40,7 +40,23 @@
     <div id="resultado" style="margin-top: 20px;"></div>
     <div id="output"></div>
   </div>
+  <div id="wordCheck" style="margin-top: 60px; margin-left: auto; display: none">
+    <form onsubmit="event.preventDefault(); checkWord();" class="row g-3">
+      <div class="col-auto">
+        <label for="staticWord" class="visually-hidden">WordToCheck</label>
+        <input type="text" readonly class="form-control-plaintext" id="staticWord">
+      </div>
+      <div class="col-auto">
+        <label for="inputWord" class="visually-hidden">Palabra</label>
+        <input type="text" class="form-control" id="inputWord" placeholder="Palabra">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Checar palabra en lenguaje</button>
+      </div>
+    </form>
 
+    <div id="output2" style="display: flex; justify-content: center;" ></div>
+  </div>
   <script src="./scripts.js"></script>
   <script 
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" 

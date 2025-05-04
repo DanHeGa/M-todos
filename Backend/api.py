@@ -1,4 +1,5 @@
 import json
+import os
 from flask import Flask, jsonify, request, send_from_directory
 from Integradora.Thompson import infix2postfix, postRe2NFA
 from Integradora.NFAtoDFA import nfa_to_dfa, generate_dfa_svg, language_checker
@@ -6,15 +7,18 @@ from Integradora.NFAtoDFA import nfa_to_dfa, generate_dfa_svg, language_checker
 #create new application
 app = Flask(__name__)
 
+currentDFA = None
+
 # Ruta principal para servir index.html
 @app.route("/")
 def index():
-    return send_from_directory('Frontend', 'index.html')
+    print("Hola")
+    return send_from_directory(os.path.join(os.path.dirname(__file__), '../Frontend'), 'index.html')
 
 # Ruta para archivos estáticos (como CSS o JS)
 @app.route('/<path:path>')
 def static_files(path):
-    return send_from_directory('Frontend', path)
+    return send_from_directory(os.path.join(os.path.dirname(__file__), '../Frontend'), path)
 
 # Ruta de la API
 @app.route("/api/registros/generales")
@@ -48,7 +52,9 @@ def get_dfa_svg():
 
         # Convertir el NFA a DFA (solo las transiciones y las claves del alfabeto)
         dfa = nfa_to_dfa(transitions, keys)
-
+        global currentDFA
+        currentDFA = dfa
+        
         # Generar el SVG para visualizar el DFA (por ahora solo un ejemplo)
         svg = generate_dfa_svg(dfa, "dfa_svg.svg")
 
@@ -62,13 +68,11 @@ def get_dfa_svg():
 
 @app.route("/wordChecker", methods=['POST'])
 def simulate_dfa():
+    global currentDFA
+    if currentDFA is None:
+        return jsonify({"error": "DFA not initialized"}), 400
     word = request.json.get('word')
-    regex = request.json.get('regex')
-    postfix_re = infix2postfix(regex)
-    nfa = postRe2NFA(postfix_re)
-    keys = nfa["alphabet"]
-    dfa = nfa_to_dfa(nfa["states"], keys)
-    belongs = language_checker(word, regex)
+    belongs = language_checker(word, currentDFA)
     return jsonify({"inLanguage": belongs})
 
     

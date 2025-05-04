@@ -108,7 +108,8 @@ def nfa_to_dfa(originalNFA, keys):
         "estados": dfaStates,
         "transiciones": dfaTransitions,
         "estado_inicial": start,
-        "estados_finales": dfaFinalState
+        "estados_finales": dfaFinalState,
+        "alfabeto": alfabeto
     }
     return resultDFA
 
@@ -159,6 +160,15 @@ def generate_dfa_svg(dfa, output_file):
 def etiquetaEstado(estado):
     return "{" + ",".join(map(str, sorted(estado))) + "}"
 
-def language_checker(word, regular_expression):
-    regex = re.compile(regular_expression)
-    return bool(regex.fullmatch(word))
+def language_checker(word, dfa):
+    current_state = dfa['estado_inicial']
+    for symbol in word:
+        if symbol not in dfa['alfabeto']:
+            return False
+        # Look up transition using (current_state, symbol) tuple
+        transition_key = (current_state, symbol)
+        if transition_key in dfa['transiciones']:
+            current_state = dfa['transiciones'][transition_key]
+        else:
+            return False
+    return current_state in dfa['estados_finales']
