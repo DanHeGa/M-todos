@@ -1,7 +1,6 @@
 import re
 from graphviz import Digraph
 
-
 def infix2postfix(regex):
   postFix = []
   stack = []
@@ -141,7 +140,10 @@ def postRe2NFA(postfix):
           if end == r22 or end == r12:end = c2
   print (keys)
   print (s)
-    
+  
+  # CORRECCION:
+  start, end = stack[-1]
+  
   return {
     "states": s,
     "start": start,
