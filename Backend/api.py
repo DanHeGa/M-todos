@@ -30,8 +30,8 @@ def get_dfa_svg():
     try:
         # Obtener la expresión regular (regex) del cliente
         re = request.json.get('regex')
-
-        # Convertir la expresión regular a notación postfix
+        
+        # Ahora convierte a postfix
         postfix_re = infix2postfix(re)
 
         # Convertir la notación postfix a NFA
@@ -44,14 +44,19 @@ def get_dfa_svg():
         print("Postfix RE:", postfix_re)  # DEBUG
         print("NFA States (Transitions):", transitions)  # DEBUG
         print("NFA Alphabet (Keys):", keys)  # DEBUG
-
+        
+        # CORRECCIONES: # en lineas 51. 52 y 55, agregue 57 y 58 (tercer parametro)
         # Si el NFA tiene claves extra (como el estado inicial), las eliminamos
         # Asegúrate de que solo pases las transiciones a nfa_to_dfa()
-        if 'start' in transitions:
-            start_state = transitions.pop('start')  # Elimina la clave 'start', si existe
+        #if 'start' in transitions:
+        #    start_state = transitions.pop('start')  # Elimina la clave 'start', si existe
 
         # Convertir el NFA a DFA (solo las transiciones y las claves del alfabeto)
-        dfa = nfa_to_dfa(transitions, keys)
+        # dfa = nfa_to_dfa(transitions, keys)
+        
+        start_state = nfa.get("start", 0)
+        dfa = nfa_to_dfa(transitions, keys, start_state)
+
         global currentDFA
         currentDFA = dfa
         
